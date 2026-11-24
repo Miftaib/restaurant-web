@@ -72,35 +72,35 @@ Tujuan: Membangun gerbang login dan tata letak dasbor admin yang aman (FR-5).
 
 ---
 
-### Fase 3: Manajemen Menu & Stok (Owner)
+### Fase 3: Manajemen Menu & Stok (Owner) (Status: Selesai ✅)
 Tujuan: Memberikan kendali penuh kepada owner untuk mengelola menu dan stok dengan nol istilah teknis (FR-6, FR-7).
 
-- [ ] Daftar Menu Admin:
+- [x] Daftar Menu Admin:
   - Tampilan daftar menu per kategori dengan aksi cepat.
   - **1-Tap Stock Toggle**: Mengubah status "Tersedia / Habis" secara instan dengan feedback toast cepat & opsi Undo.
-- [ ] Form Tambah & Ubah Menu (`/admin/menu/baru`, `/admin/menu/[id]`):
+- [x] Form Tambah & Ubah Menu (`/admin/menu/baru`, `/admin/menu/[id]`):
   - Field: Nama, Kategori (dropdown), Harga (input numerik), Deskripsi, Status Aktif (tampil/sembunyikan).
   - Upload Foto Menu: Kompresi gambar di sisi browser (maks 1600px sisi terpanjang, < 5MB) sebelum upload ke Supabase Storage `images`.
-- [ ] CRUD Kategori Menu (`/admin/kategori`):
+- [x] CRUD Kategori Menu (`/admin/kategori`):
   - Tambah kategori baru, edit nama, atur urutan (`sort_order`).
   - Proteksi hapus kategori: blokir penghapusan jika kategori masih memiliki menu (dengan opsi nonaktifkan kategori).
-- [ ] Dialog konfirmasi sebelum aksi penghapusan menu/kategori.
+- [x] Dialog konfirmasi sebelum aksi penghapusan menu/kategori.
 
 ---
 
-### Fase 4: Manajemen Profil Restoran & Polish Akhir
+### Fase 4: Manajemen Profil Restoran & Polish Akhir (Status: Selesai ✅)
 Tujuan: Pengelolaan profil restoran, audit performa, aksesibilitas, dan uji coba alur owner (FR-8, NFR-1–5, M1–M5).
 
-- [ ] Form Edit Profil Restoran (`/admin/profil`):
+- [x] Form Edit Profil Restoran (`/admin/profil`):
   - Nama restoran, tagline, deskripsi "Tentang Kami".
   - Alamat lengkap, nomor kontak, nomor WhatsApp (validasi format 628xxx), dan template pesan default.
   - Tautan Google Maps dan Instagram.
   - Upload logo & hero image ke storage.
-- [ ] Penanganan Edge Cases & Failure States:
+- [x] Penanganan Edge Cases & Failure States:
   - Error banner jika database tidak terjangkau.
   - State kosong jika belum ada menu ("Menu segera hadir").
   - Long text handling (nama menu / deskripsi panjang tidak merusak tata letak).
-- [ ] Audit Aksesibilitas & Performa:
+- [x] Audit Aksesibilitas & Performa:
   - Skip link ("Lewati ke menu").
   - Target sentuh mobile ≥ 44–48 px.
   - Verifikasi kontras warna WCAG AA.
