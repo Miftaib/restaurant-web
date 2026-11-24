@@ -60,15 +60,15 @@ Tujuan: Membangun pengalaman pengguna pengunjung restoran di layar HP (FR-1, FR-
 
 ---
 
-### Fase 2: Autentikasi & Portal Admin
+### Fase 2: Autentikasi & Portal Admin (Status: Selesai ✅)
 Tujuan: Membangun gerbang login dan tata letak dasbor admin yang aman (FR-5).
 
-- [ ] Halaman login `/admin/masuk`:
+- [x] Halaman login `/admin/masuk`:
   - Form email & kata sandi dengan validasi ramah pengguna.
-  - Penanganan error login yang jelas.
-- [ ] Halaman lupa sandi `/admin/lupa-sandi`: Permintaan tautan reset password via Supabase Auth email.
-- [ ] Proteksi Rute Admin di Server & Proxy (`proxy.ts`): Redirect pengunjung tanpa sesi login ke `/admin/masuk`.
-- [ ] Shell / Layout Admin: Navigasi admin mobile-friendly (tab bar bawah di HP / header bersih) dengan menu: Menu, Kategori, Profil Restoran, dan tombol Keluar (Logout).
+  - Penanganan error login yang jelas (pesan netral, penanganan rate limit, koneksi).
+- [x] Halaman lupa sandi `/admin/lupa-sandi`: Permintaan tautan reset password via Supabase Auth email dengan pesan sukses netral.
+- [x] Proteksi Rute Admin di Server & Proxy (`proxy.ts`): Redirect pengunjung tanpa sesi login ke `/admin/masuk`.
+- [x] Shell / Layout Admin: Navigasi admin responsif (tab bar bawah 56px di mobile, sidebar 220px di desktop) dengan 3 tujuan utama (Menu, Kategori, Profil Restoran), tautan "Lihat situs", dan tombol Keluar (Logout).
 
 ---
 
