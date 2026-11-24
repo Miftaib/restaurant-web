@@ -118,10 +118,29 @@ create policy "Admin bisa delete menu"
 
 -- ===== STORAGE BUCKET =====
 -- Bucket untuk foto menu, logo, hero image
--- Dibuat via Supabase Dashboard atau CLI:
---   - Nama: "images"
---   - Public: true (bisa dibaca tanpa auth)
---   - Policies: upload/delete hanya authenticated
+insert into storage.buckets (id, name, public)
+values ('images', 'images', true)
+on conflict (id) do nothing;
+
+create policy "Foto bisa dibaca publik"
+  on storage.objects for select
+  to anon, authenticated
+  using (bucket_id = 'images');
+
+create policy "Admin bisa upload foto"
+  on storage.objects for insert
+  to authenticated
+  with check (bucket_id = 'images');
+
+create policy "Admin bisa update foto"
+  on storage.objects for update
+  to authenticated
+  using (bucket_id = 'images');
+
+create policy "Admin bisa hapus foto"
+  on storage.objects for delete
+  to authenticated
+  using (bucket_id = 'images');
 
 -- ===== AUTO-UPDATE updated_at =====
 create or replace function public.handle_updated_at()
