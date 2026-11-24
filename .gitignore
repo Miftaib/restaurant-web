@@ -1,0 +1,36 @@
+# Dependencies
+node_modules/
+restaurant-web/node_modules/
+
+# Next.js build output
+.next/
+restaurant-web/.next/
+out/
+restaurant-web/out/
+build/
+restaurant-web/build/
+
+# Environment files
+.env*
+restaurant-web/.env*
+!.env*.example
+!restaurant-web/.env*.example
+
+# Vercel
+.vercel/
+
+# OS files
+.DS_Store
+Thumbs.db
+*.pem
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
+restaurant-web/next-env.d.ts
