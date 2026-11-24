@@ -10,6 +10,9 @@ import { WhatsAppBar } from "@/components/public/whatsapp-bar";
 import { Footer } from "@/components/public/footer";
 import { EmptyMenu } from "@/components/public/empty-menu";
 
+// Render dinamis di server setiap request agar update menu selalu live (PRD FR-1.4)
+export const dynamic = "force-dynamic";
+
 export async function generateMetadata(): Promise<Metadata> {
   const restaurant = await getRestaurant();
   return {

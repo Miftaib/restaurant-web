@@ -1,4 +1,4 @@
-import { createClient } from "@/lib/supabase/server";
+import { createPublicClient } from "@/lib/supabase/public";
 import { type Restaurant, type MenuCategory, type MenuItem, type MenuByCategory } from "@/lib/types";
 
 // ============================================================
@@ -183,28 +183,17 @@ export const DEFAULT_MENU_ITEMS: MenuItem[] = [
   },
 ];
 
-function isSupabaseConfigured(): boolean {
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-  return Boolean(
-    url &&
-    key &&
-    url !== "your_supabase_project_url" &&
-    key !== "your_supabase_anon_key"
-  );
-}
-
 /**
  * Mengambil profil restoran dari Supabase.
  * Mengembalikan DEFAULT_RESTAURANT jika gagal atau belum terkonfigurasi.
  */
 export async function getRestaurant(): Promise<Restaurant> {
-  if (!isSupabaseConfigured()) {
+  const supabase = createPublicClient();
+  if (!supabase) {
     return DEFAULT_RESTAURANT;
   }
 
   try {
-    const supabase = await createClient();
     const { data, error } = await supabase
       .from("restaurants")
       .select("*")
@@ -228,13 +217,12 @@ export async function getRestaurant(): Promise<Restaurant> {
  * Menyaring kategori yang tidak memiliki item aktif (FR-2.5).
  */
 export async function getMenuCategoriesWithItems(): Promise<MenuByCategory[]> {
-  if (!isSupabaseConfigured()) {
+  const supabase = createPublicClient();
+  if (!supabase) {
     return groupCategoriesAndItems(DEFAULT_MENU_CATEGORIES, DEFAULT_MENU_ITEMS);
   }
 
   try {
-    const supabase = await createClient();
-
     // 1. Ambil kategori aktif, urutkan sort_order asc
     const { data: categories, error: catError } = await supabase
       .from("menu_categories")
