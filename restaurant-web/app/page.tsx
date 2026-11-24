@@ -1,56 +1,119 @@
-import Link from "next/link";
+import type { Metadata } from "next";
+import { getRestaurant, getMenuCategoriesWithItems } from "@/lib/data";
+import { TopBar } from "@/components/public/top-bar";
+import { Hero } from "@/components/public/hero";
+import { CategoryNav } from "@/components/public/category-nav";
+import { MenuItemRow } from "@/components/public/menu-item-row";
+import { AboutSection } from "@/components/public/about-section";
+import { LocationSection } from "@/components/public/location-section";
+import { WhatsAppBar } from "@/components/public/whatsapp-bar";
+import { Footer } from "@/components/public/footer";
+import { EmptyMenu } from "@/components/public/empty-menu";
+
+// Revalidasi setiap 60 detik (Design.md OQ-16)
+export const revalidate = 60;
+
+export async function generateMetadata(): Promise<Metadata> {
+  const restaurant = await getRestaurant();
+  return {
+    title: `${restaurant.name} · Menu Digital & Profil Restoran`,
+    description: restaurant.tagline || restaurant.about || "Menu digital dan informasi restoran",
+    openGraph: {
+      title: restaurant.name,
+      description: restaurant.tagline || undefined,
+      images: restaurant.hero_image_url ? [restaurant.hero_image_url] : undefined,
+    },
+  };
+}
 
 /**
- * Halaman publik utama — placeholder Fase 0.
- * Akan dibangun lengkap di Fase 1.
+ * P1: Halaman Publik Utama
+ * Server Component — Mobile-first "Menu Kertas".
+ * PRD: FR-1, FR-2, FR-3, FR-4.
  */
-export default function HomePage() {
+export default async function HomePage() {
+  const [restaurant, menuCategories] = await Promise.all([
+    getRestaurant(),
+    getMenuCategoriesWithItems(),
+  ]);
+
   return (
-    <main className="flex-1 flex flex-col items-center justify-center px-4 py-16 text-center">
-      {/* Skip link untuk aksesibilitas */}
-      <a href="#main-content" className="skip-link">
+    <div className="min-h-screen flex flex-col bg-paper text-ink pb-24 lg:pb-8">
+      {/* Skip link untuk navigasi keyboard & screen reader (Design.md §10) */}
+      <a href="#menu" className="skip-link">
         Lewati ke menu
       </a>
 
-      <div id="main-content" className="max-w-md space-y-6">
-        {/* Monogram */}
-        <div className="w-20 h-20 mx-auto rounded-md bg-sunken flex items-center justify-center">
-          <span className="font-display text-4xl text-brand font-semibold">
-            K
-          </span>
-        </div>
+      {/* 1. TopBar (56px, sticky) */}
+      <TopBar restaurant={restaurant} />
 
-        {/* Nama */}
-        <h1 className="font-display text-4xl font-semibold text-ink">
-          Kedai Nusantara
-        </h1>
+      {/* 2. Bar WhatsApp (Floating di mobile, di DOM urutan awal untuk aksesibilitas) */}
+      <WhatsAppBar restaurant={restaurant} />
 
-        <p className="text-ink-muted">
-          Cita rasa rumahan, harga bersahabat
-        </p>
+      {/* 3. Hero Restoran */}
+      <main id="main-content" className="flex-1">
+        <Hero restaurant={restaurant} />
 
-        {/* Status */}
-        <div className="p-4 rounded-md bg-sunken text-ink-muted text-sm">
-          <p className="font-semibold text-ink mb-1">🚧 Dalam Pembangunan</p>
-          <p>
-            Website sedang dibangun. Design tokens, font, dan komponen dasar
-            sudah siap. Halaman publik lengkap akan hadir di Fase 1.
-          </p>
-        </div>
+        {/* 4. Navigasi Kategori (Sticky di bawah topbar) */}
+        {menuCategories.length > 0 && (
+          <CategoryNav categories={menuCategories} />
+        )}
 
-        {/* Link ke admin */}
-        <Link
-          href="/admin/masuk"
-          className="inline-flex items-center gap-2 text-brand underline underline-offset-2 text-sm font-semibold hover:text-brand/80"
-        >
-          Masuk ke Admin →
-        </Link>
-      </div>
+        {/* 5. Daftar Menu per Kategori */}
+        <section id="menu" className="max-w-4xl mx-auto px-4 sm:px-6 py-6" aria-label="Daftar Menu Restoran">
+          {menuCategories.length === 0 ? (
+            <EmptyMenu restaurant={restaurant} />
+          ) : (
+            <div className="space-y-12 sm:space-y-16">
+              {menuCategories.map(({ category, items }) => {
+                // Aturan foto Design.md §6 P1:
+                // Jika setidaknya 1 item dalam kategori memiliki foto, kolom foto diaktifkan
+                // agar tata letak tetap sejajar rapi.
+                const hasAnyPhoto = items.some((item) => Boolean(item.image_url));
 
-      {/* Footer */}
-      <footer className="mt-16 text-xs text-ink-muted">
-        Fase 0 · Fondasi Proyek
-      </footer>
-    </main>
+                return (
+                  <section
+                    key={category.id}
+                    id={`kategori-${category.id}`}
+                    className="scroll-mt-32"
+                    aria-labelledby={`heading-${category.id}`}
+                  >
+                    {/* Judul Kategori */}
+                    <div className="border-b-2 border-ink pb-2 mb-4">
+                      <h2
+                        id={`heading-${category.id}`}
+                        className="font-display text-xl sm:text-2xl font-semibold text-ink"
+                      >
+                        {category.name}
+                      </h2>
+                    </div>
+
+                    {/* Baris-baris Menu */}
+                    <div className="divide-y divide-transparent">
+                      {items.map((item) => (
+                        <MenuItemRow
+                          key={item.id}
+                          item={item}
+                          showPhotoColumn={hasAnyPhoto}
+                        />
+                      ))}
+                    </div>
+                  </section>
+                );
+              })}
+            </div>
+          )}
+        </section>
+
+        {/* 6. Tentang Kami */}
+        <AboutSection restaurant={restaurant} />
+
+        {/* 7. Lokasi dan Kontak */}
+        <LocationSection restaurant={restaurant} />
+      </main>
+
+      {/* 8. Footer */}
+      <Footer restaurant={restaurant} />
+    </div>
   );
 }

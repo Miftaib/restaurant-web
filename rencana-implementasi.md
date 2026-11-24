@@ -42,21 +42,21 @@ Tujuan: Membangun fondasi arsitektur, basis kode, design system token, library k
 
 ---
 
-### Fase 1: Halaman Publik & Menu Digital
+### Fase 1: Halaman Publik & Menu Digital (Status: Selesai ✅)
 Tujuan: Membangun pengalaman pengguna pengunjung restoran di layar HP (FR-1, FR-2, FR-3, FR-4).
 
-- [ ] Header & Hero Profil: Logo / Monogram, Nama Restoran, Tagline, dan deskripsi singkat.
-- [ ] Bagian Lokasi & Kontak: Alamat lengkap, tombol "Buka di Google Maps" (tautan langsung, tanpa embed berat), dan tombol telepon.
-- [ ] Sticky Category Navigation: Tab horizontal kategori dengan sorotan kategori aktif.
-- [ ] Daftar Menu per Kategori:
+- [x] Header & Hero Profil: Logo / Monogram, Nama Restoran, Tagline, dan tombol aksi berdampingan.
+- [x] Bagian Lokasi & Kontak: Alamat lengkap, tombol "Buka di Google Maps" (tautan langsung), dan nomor telepon.
+- [x] Sticky Category Navigation: Tab horizontal kategori dengan sorotan aktif dan auto-centering scroll-spy.
+- [x] Daftar Menu per Kategori:
   - Kartu baris menu dengan garis titik pemisah nota (`dotted-divider`).
   - Nama menu, harga tabular Rupiah (Rp 0 = "Gratis").
   - Deskripsi ringkas (maks 2 baris).
   - Foto menu dengan aspek rasio tetap / monogram inisial fallback jika tanpa foto.
-  - Penanda jelas jika menu "Habis" (chip `--habis-bg`).
-- [ ] Floating WhatsApp Bar: Tombol hijau WhatsApp menempel di bawah dengan tautan `wa.me` dan pesan template.
-- [ ] Footer Editorial: Tanggal pembaruan terakhir menu & tautan Instagram (jika ada).
-- [ ] SSR / Server Component data fetching dengan fallback cache / skeleton loading jika koneksi lambat.
+  - Penanda jelas jika menu "Habis" (chip `--habis-bg` & ikon status).
+- [x] Floating WhatsApp Bar: Tombol hijau WhatsApp menempel di bawah dengan tautan `wa.me` dan pesan template (desktop terintegrasi di top bar).
+- [x] Footer Editorial: Tanggal pembaruan terakhir menu & tautan Instagram / Admin.
+- [x] SSR / Server Component data fetching dengan fallback cache / default data aman saat Supabase belum terhubung.
 
 ---
 
