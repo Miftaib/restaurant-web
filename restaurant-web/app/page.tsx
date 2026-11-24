@@ -10,9 +10,6 @@ import { WhatsAppBar } from "@/components/public/whatsapp-bar";
 import { Footer } from "@/components/public/footer";
 import { EmptyMenu } from "@/components/public/empty-menu";
 
-// Revalidasi setiap 60 detik (Design.md OQ-16)
-export const revalidate = 60;
-
 export async function generateMetadata(): Promise<Metadata> {
   const restaurant = await getRestaurant();
   return {
