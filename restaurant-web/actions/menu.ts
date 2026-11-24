@@ -82,7 +82,7 @@ export async function toggleMenuVisibilityAction(
     revalidatePath("/");
     revalidatePath("/admin");
     return { success: true };
-  } catch (err) {
+  } catch {
     return { success: false, error: "Gagal mengubah status tampil." };
   }
 }
@@ -118,7 +118,7 @@ export async function updateMenuPriceAction(
     revalidatePath("/");
     revalidatePath("/admin");
     return { success: true };
-  } catch (err) {
+  } catch {
     return { success: false, error: "Gagal memperbarui harga." };
   }
 }
@@ -250,7 +250,7 @@ export async function deleteMenuItemAction(
     revalidatePath("/");
     revalidatePath("/admin");
     return { success: true };
-  } catch (err) {
+  } catch {
     return { success: false, error: "Gagal menghapus menu." };
   }
 }

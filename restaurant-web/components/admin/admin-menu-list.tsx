@@ -5,7 +5,6 @@ import Link from "next/link";
 import { type MenuItem, type MenuCategory } from "@/lib/types";
 import { AdminMenuRow } from "@/components/admin/admin-menu-row";
 import { QuickPriceModal } from "@/components/admin/quick-price-modal";
-import { Button } from "@/components/ui/button";
 
 interface CategoryWithItems {
   category: MenuCategory;
