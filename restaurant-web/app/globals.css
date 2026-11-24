@@ -1,0 +1,150 @@
+@import "tailwindcss";
+
+/* ========================================
+   Design Tokens — dari Design.md §3
+   Konsep visual: "Menu Kertas"
+   ======================================== */
+
+:root {
+  /* --- Warna --- */
+  --paper: #FAF6EE;
+  --surface: #FFFDF8;
+  --sunken: #F0E9DA;
+  --line: #E6DDCB;
+  --line-strong: #8C8271;
+  --ink: #1F1A14;
+  --ink-muted: #5E5548;
+  --brand: #B5391C;
+  --brand-ink: #FFFFFF;
+  --brand-tint: #F6E3DC;
+  --wa: #0B7A3E;
+  --wa-ink: #FFFFFF;
+  --habis-bg: #EADFCB;
+  --habis-ink: #4A3F30;
+  --success: #1F6B3A;
+  --warning: #8A5A00;
+  --danger: #8F1D1D;
+  --info: #1F4E79;
+
+  /* --- Radius --- */
+  --r-sm: 6px;
+  --r-md: 10px;
+  --r-lg: 16px;
+  --r-full: 999px;
+
+  /* --- Shadow (hangat, diwarnai tinta) --- */
+  --e0: 0 0 0 1px var(--line);
+  --e1: 0 1px 2px rgb(31 26 20 / 0.08);
+  --e2: 0 -4px 16px rgb(31 26 20 / 0.12);
+  --e3: 0 16px 40px rgb(31 26 20 / 0.20);
+
+  /* --- Motion --- */
+  --duration-fast: 150ms;
+  --duration-normal: 220ms;
+  --ease: ease-out;
+}
+
+/* Tailwind v4 theme — semua token jadi utility class */
+@theme inline {
+  /* Warna */
+  --color-paper: var(--paper);
+  --color-surface: var(--surface);
+  --color-sunken: var(--sunken);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-brand: var(--brand);
+  --color-brand-ink: var(--brand-ink);
+  --color-brand-tint: var(--brand-tint);
+  --color-wa: var(--wa);
+  --color-wa-ink: var(--wa-ink);
+  --color-habis-bg: var(--habis-bg);
+  --color-habis-ink: var(--habis-ink);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-danger: var(--danger);
+  --color-info: var(--info);
+
+  /* Font family */
+  --font-display: var(--font-fraunces), Georgia, "Times New Roman", serif;
+  --font-body: var(--font-atkinson), system-ui, -apple-system, sans-serif;
+
+  /* Radius */
+  --radius-sm: var(--r-sm);
+  --radius-md: var(--r-md);
+  --radius-lg: var(--r-lg);
+  --radius-full: var(--r-full);
+
+  /* Spacing kustom (basis 4) */
+  --spacing-18: 4.5rem;    /* 72px */
+  --spacing-22: 5.5rem;    /* 88px */
+  --spacing-30: 7.5rem;    /* 120px */
+}
+
+/* ========================================
+   Base styles
+   ======================================== */
+
+body {
+  background-color: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+}
+
+/* Focus ring global — Design.md §10 */
+*:focus-visible {
+  outline: 3px solid var(--ink);
+  outline-offset: 2px;
+}
+
+/* Skip link — aksesibilitas */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 16px;
+  z-index: 100;
+  padding: 8px 16px;
+  background: var(--ink);
+  color: var(--paper);
+  border-radius: var(--r-md);
+  font-weight: 600;
+}
+.skip-link:focus {
+  top: 8px;
+}
+
+/* Scroll padding agar sticky header tidak menutupi fokus — WCAG 2.4.11 */
+html {
+  scroll-padding-top: 112px;
+  scroll-padding-bottom: 96px;
+  scroll-behavior: smooth;
+}
+
+/* Reduced motion — Design.md §3.3 */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Garis titik nota — elemen khas Design.md §2 */
+.dotted-divider {
+  border-bottom: 2px dotted var(--line);
+}
+
+/* Harga tabular — Design.md §2 */
+.price-tabular {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+
+/* Max width baca — Design.md §3.2 */
+.max-read {
+  max-width: 65ch;
+}
